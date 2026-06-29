@@ -1,206 +1,116 @@
-# Requirement Validation and Early Change Analysis - To-Do App Mahasiswa
+# Requirement Validation and Early Change Analysis — To-Do App Mahasiswa
 
-Status: Validation completed; overall requirement set is not yet ready for architecture baseline  
-Tanggal: 29 Juni 2026  
+Status: Revalidation completed; committed MVP is ready for architecture baseline
+Tanggal: 29 Juni 2026
 Sumber: `02-elicitation.md` (`DOC-002`), `03-specification.md` (`DOC-003`), dan `04-prioritization.md` (`DOC-004`)
 
 ## 1. Validation Method
 
-Setiap requirement diperiksa terhadap enam kualitas:
-
-- `C` - clear: makna tidak ambigu.
-- `Cp` - complete: kondisi, aktor, dan hasil penting tercakup.
-- `Co` - consistent: tidak bertentangan dengan requirement, scope, atau prioritas lain.
-- `F` - feasible: secara teknis dan operasional masuk akal berdasarkan informasi yang tersedia.
-- `T` - testable: dapat diverifikasi melalui acceptance criteria atau measurement.
-- `Tr` - traceable: terhubung ke `NEED`, `GOAL`, stakeholder, atau sumber upstream.
-
-Nilai: `Y` = memenuhi, `P` = sebagian/bersyarat, `N` = belum memenuhi.
-
-Keterbatasan validasi: belum ada catatan persetujuan langsung dari STK-001, STK-003, STK-004, atau STK-005. Masukan awal berasal terutama dari STK-002 dan keputusan DEC-011 sampai DEC-018 masih berstatus `Proposed`.
+Setiap requirement dinilai `C` clear, `Cp` complete, `Co` consistent, `F` feasible, `T` testable, dan `Tr` traceable. `Y` berarti memenuhi. Feasibility didasarkan pada baseline satu developer/12 minggu; interview mahasiswa dan restore drill tetap menjadi gate sebelum release.
 
 ## 2. Functional Requirement Validation
 
 | Requirement | C | Cp | Co | F | T | Tr | Validation Status | Notes |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|---|---|
-| REQ-001 | P | P | Y | Y | Y | Y | Needs clarification | Status/default tugas belum ditentukan dan belum diuji oleh AC-001/AC-002. |
-| REQ-002 | Y | Y | Y | Y | Y | Y | Ready | AC-003 sesuai dengan daftar aktif dan selesai. |
-| REQ-003 | Y | Y | Y | Y | Y | Y | Ready | AC-004 menguji update tanpa duplikasi. |
-| REQ-004 | Y | Y | Y | Y | Y | Y | Ready | AC-005 mencakup selesai dan buka kembali. |
-| REQ-005 | P | N | P | Y | P | Y | Needs change | Setelah konfirmasi, belum jelas apakah tugas hard-delete atau soft-delete; beririsan dengan REQ-022. |
-| REQ-006 | Y | Y | Y | Y | Y | Y | Ready | Kriteria filter/urut dapat diuji melalui AC-007. |
-| REQ-007 | P | P | Y | Y | P | Y | Needs clarification | Jenis tenggat, waktu lokal, zona waktu, dan validitas nilai belum ditentukan. |
-| REQ-008 | Y | Y | Y | Y | Y | Y | Ready | AC-009 dan NFR-003 memberikan verifikasi persistence. |
-| REQ-009 | Y | Y | Y | Y | Y | Y | Deferred - ready | Requirement cukup jelas, tetapi ditempatkan di next release oleh DOC-004. |
-| REQ-010 | P | P | P | Y | P | Y | Deferred - clarify | Definisi kemajuan subtugas dan hubungan status parent-child belum ditentukan; CONF-001 belum disetujui. |
-| REQ-011 | P | N | P | P | P | Y | Deferred - clarify | Pola recurrence, tanggal akhir, perubahan occurrence, dan zona waktu belum ditentukan. |
-| REQ-012 | P | N | P | P | P | Y | Deferred - clarify | Kanal, izin, retry, dan kondisi pengingat belum disetujui. |
-| REQ-013 | Y | P | Y | Y | P | Y | Ready after REQ-007 | AC-014 dapat diuji setelah semantik tenggat/zona waktu ditetapkan. |
-| REQ-014 | P | P | Y | Y | P | Y | Deferred - clarify | Kolom/status kanban belum didefinisikan; saat ini model hanya aktif dan selesai. |
-| REQ-015 | Y | P | Y | Y | P | Y | Ready with AC gap | Alur valid diuji AC-016, tetapi invalid login, akun duplikat, dan pemulihan akses belum memiliki AC. |
-| REQ-016 | P | P | Y | P | P | Y | Deferred - clarify | “Android” belum dibedakan antara aplikasi native, wrapper, atau pengalaman web; AC-018 bergantung sinkronisasi. |
-| REQ-017 | N | N | P | P | N | Y | Needs clarification | “Operasi inti yang disepakati” belum disetujui; DEC-012 masih Proposed. |
-| REQ-018 | P | N | P | P | P | Y | Needs clarification | Konflik sinkronisasi belum menjadi aturan final; AC-021 merujuk aturan masa depan. |
-| REQ-019 | P | N | N | P | P | Y | Deferred - blocked | Model undangan dan izin belum ada serta bertentangan dengan baseline individual. |
-| REQ-020 | P | N | N | P | P | Y | Deferred - blocked | Bergantung REQ-019/REQ-021 dan keputusan ownership kolaborasi. |
-| REQ-021 | N | N | P | P | N | Y | Deferred - blocked | Role-permission matrix belum ditentukan, sehingga AC-024 belum dapat dieksekusi. |
-| REQ-022 | Y | P | Y | Y | Y | Y | Deferred - policy approval | AC-025 testable, tetapi kebijakan 30 hari belum disetujui STK-002/STK-005. |
-| REQ-023 | P | P | P | Y | P | Y | Deferred - clarify | “Format umum” dan cakupan ekspor belum ditentukan; juga berkonflik dengan NFR-007 Must MVP. |
-| REQ-024 | P | N | P | Y | P | Y | Needs clarification | Masa tenggang belum final; DEC-016 masih Proposed. |
-| REQ-025 | P | P | Y | Y | P | Y | Needs clarification | Belum jelas apakah tugas yang dibuka kembali lalu diselesaikan ulang dihitung sekali atau beberapa kali. |
-| REQ-026 | N | N | Y | N | N | Y | Deferred - research | Tidak memiliki AC dan sengaja dipindahkan ke research track melalui DEC-017. |
-
-### Functional Result Summary
-
-- Ready: REQ-002, REQ-003, REQ-004, REQ-006, REQ-008.
-- Ready setelah dependensi/minor gap: REQ-013, REQ-015.
-- Memerlukan klarifikasi/perubahan sebelum design: REQ-001, REQ-005, REQ-007, REQ-017, REQ-018, REQ-024, REQ-025.
-- Deferred/next release: REQ-009 sampai REQ-012, REQ-014, REQ-016, REQ-022, REQ-023.
-- Deferred dan blocked: REQ-019 sampai REQ-021.
-- Research only: REQ-026.
+| REQ-001 | Y | Y | Y | Y | Y | Y | Ready-MVP | Default `active` dan validasi judul jelas. |
+| REQ-002 | Y | Y | Y | Y | Y | Y | Ready-MVP | State active/completed/trashed eksplisit. |
+| REQ-003 | Y | Y | Y | Y | Y | Y | Ready-MVP | Editable fields dan ownership jelas. |
+| REQ-004 | Y | Y | Y | Y | Y | Y | Ready-MVP | Complete/reopen dan `completed_at` testable. |
+| REQ-005 | Y | Y | Y | Y | Y | Y | Ready-MVP | Soft-delete 30 hari dan konfirmasi permanent-delete konsisten. |
+| REQ-006 | Y | Y | Y | Y | Y | Y | Ready-MVP | Filter/sort observable. |
+| REQ-007 | Y | Y | Y | Y | Y | Y | Ready-MVP | Enum priority serta aturan UTC/profile timezone jelas. |
+| REQ-008 | Y | Y | Y | Y | Y | Y | Ready-MVP | Persistence diverifikasi AC-009/NFR-003. |
+| REQ-009 | Y | Y | Y | Y | Y | Y | Deferred-ready | Next release. |
+| REQ-010 | Y | Y | Y | Y | Y | Y | Deferred-ready | Rumus progress telah ditetapkan. |
+| REQ-011 | Y | Y | Y | Y | Y | Y | Deferred-ready | Pola dasar telah dibatasi; detail tahap next release. |
+| REQ-012 | Y | Y | Y | Y | Y | Y | Deferred-ready | Kanal dibatasi in-app. |
+| REQ-013 | Y | Y | Y | Y | Y | Y | Ready-MVP | Calendar mengikuti zona profil. |
+| REQ-014 | Y | Y | Y | Y | Y | Y | Deferred-ready | Kolom active/completed jelas. |
+| REQ-015 | Y | Y | Y | Y | Y | Y | Ready-MVP | Positive dan negative auth paths tercakup. |
+| REQ-016 | Y | Y | Y | Y | Y | Y | Deferred-ready | Android native memiliki re-entry condition. |
+| REQ-017 | Y | Y | Y | Y | Y | Y | Ready-MVP | Operasi offline eksplisit. |
+| REQ-018 | Y | Y | Y | Y | Y | Y | Ready-MVP | Idempotency, version checking, dan no-silent-overwrite eksplisit. |
+| REQ-019 | P | N | Y | P | P | Y | Deferred-blocked | Invitation dan role model wajib ditetapkan sebelum re-entry; tidak menjadi input MVP. |
+| REQ-020 | P | N | Y | P | P | Y | Deferred-blocked | Bergantung REQ-019/021 dan ownership model masa depan. |
+| REQ-021 | P | N | Y | P | N | Y | Deferred-blocked | Role-permission matrix wajib sebelum AC-024 dapat dieksekusi. |
+| REQ-022 | Y | Y | Y | Y | Y | Y | Ready-MVP | Menutup lifecycle soft-delete. |
+| REQ-023 | Y | Y | Y | Y | Y | Y | Deferred-ready | JSON/CSV eksplisit; next release. |
+| REQ-024 | Y | Y | Y | Y | Y | Y | Ready-MVP | Masa tenggang 30 hari dan cancellation jelas. |
+| REQ-025 | Y | Y | Y | Y | Y | Y | Ready-MVP | Distinct task per period menghapus ambiguity. |
+| REQ-026 | Y | Y | Y | Y | Y | Y | Research-only | Bukan fitur implementasi. |
 
 ## 3. Non-Functional Requirement Validation
 
-| Requirement | C | Cp | Co | F | T | Tr | Validation Status | Notes |
+| Requirement | C | Cp | Co | F | T | Tr | Status | Notes |
 |---|:---:|:---:|:---:|:---:|:---:|:---:|---|---|
-| NFR-001 | Y | Y | Y | P | Y | Y | Needs stakeholder validation | Terukur, tetapi sampel dan target 80% belum disetujui STK-002/STK-004. |
-| NFR-002 | P | N | Y | P | P | Y | Needs clarification | Perangkat/jaringan minimum belum ditentukan dan target 1.000 tugas belum divalidasi. |
-| NFR-003 | Y | Y | Y | Y | Y | Y | Ready | Selaras dengan REQ-008 dan dapat diuji otomatis. |
-| NFR-004 | P | P | Y | P | P | Y | Needs clarification | Bergantung pada cakupan offline REQ-017/DEC-012 yang belum disetujui. |
-| NFR-005 | P | N | P | P | P | Y | Needs clarification | “Koneksi stabil” tidak terukur dan perangkat kedua tidak selaras penuh dengan MVP web-first. |
-| NFR-006 | Y | Y | Y | Y | Y | Y | Ready for security design | Measurement jelas; model authorization rinci masih menjadi hasil design. |
-| NFR-007 | Y | P | N | Y | P | Y | Needs change | Must MVP memeriksa REQ-023, sedangkan REQ-023 diprioritaskan next release. |
-| NFR-008 | Y | Y | Y | P | Y | Y | Needs stakeholder validation | Testable, tetapi profil kebutuhan pengguna dan target akhir belum divalidasi STK-001/STK-004. |
-| NFR-009 | P | P | Y | P | P | Y | Deferred - clarify | Definisi downtime, maintenance, dan monitoring belum lengkap; next release. |
-| NFR-010 | Y | Y | Y | P | Y | Y | Needs stakeholder validation | RPO/RTO testable, tetapi bergantung hosting dan belum disetujui STK-005. |
-| NFR-011 | Y | P | Y | Y | Y | Y | Ready with boundary note | “Modul domain inti” harus dipetakan saat design agar cakupan 80% tidak ambigu. |
-
-### NFR Result Summary
-
-- Ready: NFR-003, NFR-006, NFR-011.
-- Memerlukan validasi threshold stakeholder: NFR-001, NFR-008, NFR-010.
-- Memerlukan klarifikasi/perubahan: NFR-002, NFR-004, NFR-005, NFR-007.
-- Deferred: NFR-009.
+| NFR-001 | Y | Y | Y | Y | Y | Y | Ready-MVP | Sampel dan threshold eksplisit. |
+| NFR-002 | Y | Y | Y | Y | Y | Y | Ready-MVP | P95, dataset, dan target jelas. |
+| NFR-003 | Y | Y | Y | Y | Y | Y | Ready-MVP | Nol kehilangan pada suite rilis. |
+| NFR-004 | Y | Y | Y | Y | Y | Y | Ready-MVP | Pending state bertahan setelah restart. |
+| NFR-005 | Y | Y | Y | Y | Y | Y | Ready-MVP | 30 detik dan conflict behavior terukur. |
+| NFR-006 | Y | Y | Y | Y | Y | Y | Ready-MVP | Authorization/hash/TLS dapat diuji. |
+| NFR-007 | Y | Y | Y | Y | Y | Y | Ready-MVP | Export dipisah sehingga tidak konflik. |
+| NFR-008 | Y | Y | Y | Y | Y | Y | Ready-MVP | Keyboard/name/focus/contrast terukur. |
+| NFR-009 | Y | Y | Y | Y | Y | Y | Deferred-ready | SLA formal next release. |
+| NFR-010 | Y | Y | Y | Y | Y | Y | Ready-MVP | RPO/RTO eksplisit; proof tetap release gate. |
+| NFR-011 | Y | Y | Y | Y | Y | Y | Ready-MVP | CI pass dan coverage boundary jelas. |
 
 ## 4. Acceptance Criteria Validation
 
-| AC | Result | Validation Note |
+- AC-001–AC-009, AC-014, AC-016–AC-017, AC-019–AC-021, AC-025, AC-027, dan AC-028: `Pass` untuk design/testability.
+- AC-010–AC-013, AC-015, AC-018, AC-022–AC-024, dan AC-026: `Pass-deferred`; testable tetapi tidak masuk MVP.
+- Tidak ada AC MVP yang `Partial` atau `Fail`.
+
+## 5. Resolution of Previous Findings
+
+| Previous Finding | Resolution | Evidence |
 |---|---|---|
-| AC-001 | Partial | Pembuatan valid dapat diuji, tetapi default status belum dinyatakan. |
-| AC-002 | Pass | Kondisi judul kosong dan hasil penolakan observable. |
-| AC-003 | Pass | Status dan pembukaan detail dapat diverifikasi. |
-| AC-004 | Pass | Perubahan tanpa duplikasi dapat diuji. |
-| AC-005 | Pass | Transisi selesai dan kembali aktif observable. |
-| AC-006 | Partial | Konfirmasi dapat diuji, tetapi state data setelah delete belum ditentukan. |
-| AC-007 | Pass | Dataset dengan variasi status/prioritas/tenggat dapat memverifikasi hasil. |
-| AC-008 | Partial | Nilai “tenggat yang valid” belum didefinisikan. |
-| AC-009 | Pass | Restart/reload memberi tes persistence yang jelas. |
-| AC-010 | Pass | Operasi tag dan filter memiliki hasil observable. |
-| AC-011 | Partial | “Ringkasan kemajuan” belum memiliki rumus atau tampilan minimum. |
-| AC-012 | Partial | “Pola valid” dan kondisi occurrence berikutnya belum didefinisikan. |
-| AC-013 | Partial | Kanal, izin, dan toleransi waktu pengiriman belum ditentukan. |
-| AC-014 | Partial | Pemetaan tanggal bergantung semantik tenggat dan zona waktu REQ-007. |
-| AC-015 | Partial | Kolom status asal/tujuan belum ditetapkan. |
-| AC-016 | Partial | Hanya positive path; negative path autentikasi belum tercakup. |
-| AC-017 | Pass | Isolasi data antar-akun observable dan sesuai NFR-006. |
-| AC-018 | Partial | “Ketika sinkronisasi berhasil” bersifat sirkular tanpa kondisi dan waktu yang jelas. |
-| AC-019 | Fail | Operasi offline yang harus diuji belum disepakati. |
-| AC-020 | Pass conditional | Testable untuk perubahan tanpa konflik setelah prasyarat sinkronisasi ditetapkan. |
-| AC-021 | Fail | Expected result bergantung aturan resolusi yang belum ada. |
-| AC-022 | Partial | Role dan izin valid belum didefinisikan. |
-| AC-023 | Partial | Pihak berwenang dan lifecycle assignment belum didefinisikan. |
-| AC-024 | Fail | Tidak ada role-permission matrix untuk menentukan tindakan allowed/denied. |
-| AC-025 | Pass conditional | Testable jika kebijakan 30 hari disetujui. |
-| AC-026 | Partial | Format dan field ekspor belum ditentukan. |
-| AC-027 | Fail | Masa tenggang belum memiliki nilai yang disetujui. |
-| AC-028 | Partial | Aturan perhitungan completion berulang belum ditentukan. |
+| VAL-002 delivery constraint | Baseline satu developer, 12 minggu, TypeScript, biaya rendah. | CON-004; Q-013 |
+| VAL-003 default status | Default `active`. | REQ-001; AC-001 |
+| VAL-004 delete lifecycle | Soft-delete/trash 30 hari; restore MVP. | REQ-005/022; AC-006/025 |
+| VAL-005 date/time | Instant UTC dan zona profil; priority enum. | REQ-007; AC-008/014 |
+| VAL-006 offline scope | Read/create/edit/complete/reopen/soft-delete. | REQ-017; AC-019; DEC-012 |
+| VAL-007 sync conflict | Idempotency + optimistic concurrency + retain both versions. | REQ-018; AC-020/021; DEC-013 |
+| VAL-008 privacy/export conflict | Privacy transparency/delete MVP; export next release. | NFR-007; REQ-023/024 |
+| VAL-009 account grace | 30 hari dan dapat dibatalkan. | REQ-024; AC-027 |
+| VAL-010 auth gaps | Invalid credentials, duplicate email, invalid reset token ditambahkan. | AC-016 |
+| VAL-011 completion count | Distinct task per period. | REQ-025; AC-028 |
+| VAL-012 NFR thresholds | Diterima sebagai baseline design/test. | DEC-018; NFR-001–011 |
+| VAL-013 platform | Web/PWA first; Android next release. | DEC-011; REQ-016 |
+| VAL-014 collaboration | Deferred dengan re-entry role elicitation. | DEC-015; REQ-019–021 |
+| VAL-015 accessibility | Target terukur ditetapkan. | NFR-008 |
 
-Acceptance criteria result: 8 `Pass`, 2 `Pass conditional`, 14 `Partial`, dan 4 `Fail`. AC-019, AC-021, AC-024, serta AC-027 harus diperbaiki sebelum requirement terkait dapat menjadi baseline design.
+## 6. Open Risks (Non-Blocking for Architecture)
 
-## 5. Validation Findings
-
-| Finding | Severity | Upstream IDs | Finding and Impact | Route/Owner |
+| Finding | Severity | Upstream IDs | Risk and Gate | Owner |
 |---|---|---|---|---|
-| VAL-001 | High | STK-001; NEED-001 sampai NEED-021 | Belum ada bukti validasi langsung dari mahasiswa; kebutuhan masih terutama berasal dari STK-002. Risiko: produk memvalidasi asumsi product owner, bukan workflow mahasiswa. | Kembali ke `02-se-elicitation`; STK-001/STK-002 |
-| VAL-002 | Blocker | CON-004; DEC-002; Q-013 | Deadline, anggaran, ukuran tim, dan kemampuan teknologi belum diketahui. Feasibility MVP tidak dapat dikonfirmasi. | Elicitation/decision; STK-002/STK-003 |
-| VAL-003 | Medium | REQ-001; AC-001 | Default status tugas tidak ditentukan. | `03-se-specification`; STK-002 |
-| VAL-004 | High | REQ-005, REQ-022; AC-006, AC-025; DEC-007/DEC-016 | Lifecycle delete tidak konsisten antara MVP dan next release. Architecture storage tidak dapat menetapkan hard/soft delete dengan aman. | `03-se-specification`; STK-002/STK-005 |
-| VAL-005 | High | REQ-007, REQ-011 sampai REQ-013; AC-008, AC-012 sampai AC-014; ASSUMP-002 | Semantik date/time/timezone belum ditentukan dan memengaruhi kalender, recurring task, serta reminder. | Elicitation lalu specification; STK-001/STK-002 |
-| VAL-006 | Blocker | REQ-017, NFR-004, AC-019; DEC-004/DEC-012 | Cakupan offline belum mendapat approval; AC-019 tidak dapat diuji. | Stakeholder decision lalu `03-se-specification`; STK-002 |
-| VAL-007 | Blocker | REQ-018, NFR-005, AC-021; DEC-005/DEC-013 | Aturan konflik sinkronisasi belum final; silent-loss risk tetap terbuka. | Stakeholder decision lalu `03-se-specification`; STK-002/STK-003 |
-| VAL-008 | High | NFR-007, REQ-023, REQ-024; AC-026, AC-027 | NFR-007 berstatus Must MVP tetapi measurement bergantung REQ-023 yang ditunda. | Split/revise NFR-007 di `03`; reprioritize di `04`; STK-002/STK-005 |
-| VAL-009 | High | REQ-024, AC-027; DEC-007/DEC-016 | Masa tenggang penghapusan akun belum disetujui, padahal REQ-024 adalah Must-gate. | Stakeholder validation; STK-002/STK-005 |
-| VAL-010 | Medium | REQ-015; AC-016 | Negative paths autentikasi dan pemulihan akses tidak tercakup. | `03-se-specification`; STK-002/STK-003 |
-| VAL-011 | Medium | REQ-025; AC-028 | Definisi “jumlah tugas selesai” ambigu ketika tugas dibuka dan diselesaikan ulang. | `03-se-specification`; STK-002/STK-004 |
-| VAL-012 | High | NFR-001 sampai NFR-011; DEC-010/DEC-018 | Seluruh threshold NFR masih kandidat; definition of done belum disetujui. | Validation workshop; STK-002 sampai STK-005 |
-| VAL-013 | Medium | REQ-016, NFR-005; DEC-003/DEC-011 | Web-first hanya rekomendasi, bukan keputusan stakeholder; konteks “perangkat kedua” belum jelas. | Approve/reject DEC-011; STK-002 |
-| VAL-014 | Medium | REQ-019 sampai REQ-021; CONF-003; DEC-015 | Kolaborasi sudah ditunda secara masuk akal, tetapi belum ada approval formal atas perubahan ekspektasi awal. | STK-002 approval; elicitation khusus sebelum re-entry |
-| VAL-015 | Medium | NFR-008; NEED-018; DEC-008 | Accessibility target testable, tetapi kebutuhan mahasiswa dengan disabilitas belum divalidasi. | `02-se-elicitation`; STK-001/STK-004 |
+| VAL-016 | Medium | STK-001; NFR-001/008 | Belum ada bukti langsung mahasiswa. Wajib usability/accessibility test minimal 5 mahasiswa sebelum acceptance. | STK-001/004 |
+| VAL-017 | Medium | CON-004 | Baseline solo/12 minggu adalah planning assumption; lakukan re-estimation saat kondisi aktual diketahui. | STK-002/003 |
+| VAL-018 | High-release | NFR-010 | Provider belum membuktikan restore. Wajib restore drill sebelum production release. | STK-005 |
+| VAL-019 | High-delivery | REQ-017/018 | Offline-sync kompleks; architecture harus menyediakan spike, observability, idempotency, dan rollback scope. | STK-003 |
 
-## 6. Duplicate, Conflict, and Oversize Review
+## 7. Architecture Input Set
 
-- Tidak ditemukan duplicate exact. Pasangan REQ-008/NFR-003, REQ-017/NFR-004, dan REQ-018/NFR-005 saling melengkapi sebagai behavior versus quality threshold.
-- Konflik material ditemukan pada NFR-007 versus prioritas REQ-023 (`VAL-008`).
-- Konflik lifecycle ditemukan pada REQ-005 versus REQ-022 (`VAL-004`).
-- REQ-017/REQ-018 terlalu besar untuk implementation issue tunggal; setelah aturan final, keduanya perlu dipecah saat issue planning, tetapi tetap dapat dipertahankan sebagai product-level requirement.
-- NFR-006 menggabungkan authorization, credential storage, dan encryption. Requirement masih dapat digunakan untuk architecture, tetapi harus menghasilkan beberapa control/test terpisah.
-- REQ-019 sampai REQ-021 memang besar dan belum lengkap; keputusan deferred mencegahnya mengaburkan MVP.
+- Functional: REQ-001–REQ-008, REQ-013, REQ-015, REQ-017, REQ-018, REQ-022, REQ-024, REQ-025.
+- Quality: NFR-001–NFR-008, NFR-010, NFR-011.
+- Deferred items tidak boleh mengembangkan MVP secara diam-diam.
 
-## 7. Required Changes Before Architecture Baseline
+## 8. Readiness Decisions
 
-| Order | Required Change | Related Finding | Target Artifact |
-|---:|---|---|---|
-| 1 | Catat deadline, ukuran tim, kemampuan teknologi, dan batas delivery. | VAL-002 | `02-elicitation.md` atau approved decision note |
-| 2 | Validasi web-first, scope operasi offline, aturan konflik, dan kebijakan penghapusan akun dengan owner. | VAL-006, VAL-007, VAL-009, VAL-013 | Stakeholder decision record; lalu `03`/`04` |
-| 3 | Tentukan semantik tenggat: date-only atau date-time, zona waktu, dan perilaku saat zona berubah. | VAL-005 | `03-specification.md` setelah elicitation |
-| 4 | Selaraskan REQ-005 dengan REQ-022 dan tetapkan hard/soft delete per release. | VAL-004 | `03-specification.md` |
-| 5 | Split NFR-007 menjadi privacy transparency/account deletion untuk MVP dan export requirement untuk next release, atau naikkan REQ-023 ke MVP. | VAL-008 | `03-specification.md`, lalu `04-prioritization.md` |
-| 6 | Tambahkan/finalkan AC untuk autentikasi negatif, offline operations, conflict resolution, account deletion, dan completion counting. | VAL-003, VAL-006, VAL-007, VAL-009 sampai VAL-011 | `03-specification.md` |
-| 7 | Validasi angka NFR melalui STK-003/STK-004/STK-005. | VAL-012, VAL-015 | `03-specification.md`/validation notes |
-| 8 | Peroleh bukti minimal dari mahasiswa sasaran untuk workflow, offline context, dan prioritas kalender. | VAL-001, VAL-015 | `02-elicitation.md` |
-
-Dokumen upstream tidak diubah oleh tahap ini. Perubahan di atas adalah change proposal dan harus dicatat melalui workflow yang sesuai sebelum mengganti baseline.
-
-## 8. Early Change Impact Notes
-
-| Change Proposal | Reason | Impact | Decision Status |
+| Decision | Decision | Rationale | Status |
 |---|---|---|---|
-| Pisahkan NFR-007 menjadi dua scope release. | Menghapus konflik dengan REQ-023 next release. | Specification, priority, privacy tests, dan architecture data-control berubah. | Proposed; owner STK-002/STK-005 |
-| Tetapkan soft-delete atau hard-delete untuk REQ-005. | Storage lifecycle saat ini ambigu. | Database schema, API, offline queue, recovery, dan AC-006/AC-025 berubah. | Proposed; owner STK-002/STK-005 |
-| Adopsi DEC-012 sebagai cakupan offline MVP. | Membuat REQ-017/AC-019 testable. | UI status, local persistence, synchronization, dan test scope bertambah. | Proposed; owner STK-002 |
-| Adopsi DEC-013 sebagai aturan konflik sementara. | Mencegah silent overwrite. | Model versioning, UI conflict, audit data, dan test AC-021 bertambah. | Proposed; owner STK-002/STK-003 |
-| Pertahankan web-first dan tunda Android. | Mengurangi scope delivery awal. | REQ-016 tetap next release; architecture harus menjaga boundary agar Android dapat ditambahkan. | Proposed; owner STK-002 |
+| DEC-019 | Keputusan `not ready` sebelumnya disupersede setelah perbaikan DOC-002–004. | Semua blocker architecture lama telah memiliki keputusan dan AC testable. | Superseded |
+| DEC-021 | Larangan memulai tahap 6 sebelumnya disupersede. | VAL-002–VAL-015 telah diselesaikan atau dipindahkan menjadi release gate yang eksplisit. | Superseded |
+| DEC-023 | Committed MVP requirement set siap menjadi architecture baseline. | Semua MVP REQ/NFR clear, complete, consistent, feasible, testable, dan traceable. | Approved for design |
+| DEC-024 | Lanjut ke `06-se-architecture-design`. | Input architecture dan risk gate telah terdefinisi. | Approved |
+| DEC-025 | Interview mahasiswa dan restore drill tetap wajib sebelum acceptance/release. | Architecture readiness tidak boleh disalahartikan sebagai release readiness. | Mandatory gate |
 
-Tidak ada change proposal yang dianggap approved pada dokumen ini karena belum ada stakeholder approval note.
+## 9. Readiness Decision
 
-## 9. Stakeholder Validation Notes
+**Ready for design: Yes**
 
-| Stakeholder | Evidence Available | Validation State | Required Action |
-|---|---|---|---|
-| STK-001 Mahasiswa | Belum ada interview/survey langsung; kebutuhan disampaikan STK-002 | Not validated | Wawancarai/observasi mahasiswa sasaran dan validasi pain point serta offline workflow. |
-| STK-002 Product owner | Jawaban OQ-001 sampai OQ-012 tersedia | Partially validated | Approve/reject DEC-011 sampai DEC-018 serta tetapkan delivery constraints. |
-| STK-003 Developer | Belum ada feasibility note | Not validated | Nilai effort, architecture risk, offline-sync, dan NFR threshold. |
-| STK-004 Tester/evaluator | Belum ada test/measurement approval | Not validated | Validasi NFR-001, NFR-008, AC, dan metrik REQ-025/REQ-026. |
-| STK-005 Administrator | Belum ada operational approval | Not validated | Validasi NFR-010, retention, backup, recovery, export, dan account deletion. |
+Reason: scope MVP telah dipersempit, keputusan offline/sync/delete/timezone/platform telah difinalkan untuk desain, seluruh AC MVP testable, dan risiko yang masih membutuhkan evidence ditempatkan sebagai gate acceptance/release dengan owner jelas.
 
-## 10. Readiness Decisions
+## 10. Handoff
 
-| Decision | Decision | Rationale | Owner/Status |
-|---|---|---|---|
-| DEC-019 | Overall requirement set is **not ready** for architecture baseline. | VAL-002, VAL-006, VAL-007, VAL-008, VAL-009, dan VAL-012 memengaruhi MVP serta architecture secara material. | Validation result; pending STK-002 approval |
-| DEC-020 | REQ-002, REQ-003, REQ-004, REQ-006, REQ-008, NFR-003, NFR-006, dan NFR-011 dinyatakan structurally ready. | Item jelas, konsisten, testable, dan traceable; tetap tunduk pada persetujuan baseline. | Proposed validation decision |
-| DEC-021 | Jangan mulai `06-se-architecture-design` sebagai baseline final sebelum Required Changes 1-8 selesai. | Architecture saat ini harus menebak offline, sync conflict, delete lifecycle, privacy scope, dan capacity. | STK-002/STK-003; pending |
-| DEC-022 | REQ-019 sampai REQ-021 tetap deferred dan REQ-026 tetap research-only. | Item tidak diperlukan untuk MVP dan belum lengkap. | Consistent with DEC-015/DEC-017; pending approval |
-
-## 11. Readiness Decision
-
-**Ready for design: No**
-
-Reason: requirement inti CRUD memiliki fondasi yang baik, tetapi MVP yang diprioritaskan masih bergantung pada keputusan yang belum disetujui mengenai kapasitas tim, web-first, operasi offline, resolusi konflik sinkronisasi, lifecycle penghapusan, serta target NFR. Empat acceptance criteria masih gagal divalidasi: AC-019, AC-021, dan AC-027 langsung memblokir MVP gate, sedangkan AC-024 memblokir scope kolaborasi yang telah ditunda.
-
-### Handoff
-
-- Kembali ke `02-se-elicitation` untuk VAL-001, VAL-002, VAL-005, dan VAL-015.
-- Kembali ke `03-se-specification` untuk VAL-003 sampai VAL-011 setelah keputusan stakeholder tersedia.
-- Perbarui `04-se-prioritization` hanya jika perubahan specification mengubah MVP atau release boundary.
-- Lanjut ke `06-se-architecture-design` setelah DEC-019 dapat diubah menjadi ready berdasarkan bukti dan approval yang tercatat.
+Kirim Architecture Input Set, DEC-023–DEC-025, dan VAL-016–VAL-019 ke `06-se-architecture-design`. Jangan membawa requirement deferred ke component MVP kecuali sebagai extension boundary.
